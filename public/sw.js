@@ -12,8 +12,21 @@ self.addEventListener("fetch", (event) => {
   const isSameOrigin = requestUrl.origin === self.location.origin;
   const isDynamicProtectedPath =
     requestUrl.pathname.startsWith("/api/") || requestUrl.pathname.startsWith("/admin");
+  const isStaticAsset =
+    requestUrl.pathname.startsWith("/_next/static/") ||
+    requestUrl.pathname.startsWith("/images/") ||
+    requestUrl.pathname.startsWith("/icons/") ||
+    requestUrl.pathname.endsWith(".png") ||
+    requestUrl.pathname.endsWith(".jpg") ||
+    requestUrl.pathname.endsWith(".jpeg") ||
+    requestUrl.pathname.endsWith(".webp") ||
+    requestUrl.pathname.endsWith(".avif") ||
+    requestUrl.pathname.endsWith(".svg") ||
+    requestUrl.pathname.endsWith(".css") ||
+    requestUrl.pathname.endsWith(".js") ||
+    requestUrl.pathname.endsWith(".woff2");
 
-  if (!isSameOrigin || isDynamicProtectedPath) {
+  if (!isSameOrigin || isDynamicProtectedPath || !isStaticAsset) {
     return;
   }
 

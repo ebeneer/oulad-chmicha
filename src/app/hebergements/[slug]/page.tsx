@@ -68,6 +68,7 @@ export default async function AccommodationDetailPage({ params }: PageProps) {
             src={accommodation.images[0] ?? "/images/piscine-bungalows-oulad-chmicha.jpg"}
             alt={accommodation.title}
             fill
+            sizes="(max-width: 768px) 100vw, 1152px"
             className="object-cover opacity-20"
             priority
           />

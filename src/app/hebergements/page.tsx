@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { accommodations, units } from "@/lib/domain";
 import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/ui/section-header";
@@ -29,7 +30,17 @@ export default function AccommodationsPage() {
         {accommodations.map((item) => {
           const unit = units.find((u) => u.id === item.unitId);
           return (
-            <Card key={item.slug} className="section-enter flex h-full flex-col p-5">
+            <Card key={item.slug} className="section-enter flex h-full flex-col overflow-hidden p-0">
+              <div className="relative aspect-[16/10] w-full bg-[var(--color-surface-muted)]">
+                <Image
+                  src={item.images[0] ?? "/images/piscine-bungalows-oulad-chmicha.jpg"}
+                  alt={`Photo : ${item.title}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-accent)]">
                 {unit?.nightlyRateDh ?? 0} DH / nuit
               </p>
@@ -46,6 +57,7 @@ export default function AccommodationsPage() {
               >
                 Voir details
               </Link>
+              </div>
             </Card>
           );
         })}

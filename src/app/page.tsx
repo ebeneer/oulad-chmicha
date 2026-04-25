@@ -53,8 +53,8 @@ export default function Home() {
       alt: "Piscine et bungalows en terre crue a Oulad Chmicha",
     },
     {
-      src: "/images/cuisine-frites-oulad-chmicha.jpg",
-      alt: "Cuisine maison servie aux voyageurs",
+      src: "/images/eco-ferme-oulad-chmicha.jpg",
+      alt: "Ferme de permaculture et paysages du domaine Oulad Chmicha",
     },
     {
       src: "/images/transat-piscine-oulad-chmicha.jpg",
@@ -63,6 +63,14 @@ export default function Home() {
     {
       src: "/images/piscine-collines-oulad-chmicha.jpg",
       alt: "Vue de la piscine avec les collines autour du domaine",
+    },
+    {
+      src: "/images/architecture-ecologique-oulad-chmicha.jpg",
+      alt: "Architecture ecologique en briques d'argile au domaine",
+    },
+    {
+      src: "/images/cuisine-frites-oulad-chmicha.jpg",
+      alt: "Cuisine maison servie aux voyageurs",
     },
     {
       src: "/images/cuisine-houmous-oulad-chmicha.jpg",
@@ -79,7 +87,11 @@ export default function Home() {
     name: "Oulad Chmicha",
     description: siteConfig.description,
     url: siteConfig.url,
-    image: absoluteUrl("/images/piscine-bungalows-oulad-chmicha.jpg"),
+    image: [
+      absoluteUrl("/images/piscine-bungalows-oulad-chmicha.jpg"),
+      absoluteUrl("/images/eco-ferme-oulad-chmicha.jpg"),
+      absoluteUrl("/images/architecture-ecologique-oulad-chmicha.jpg"),
+    ],
     priceRange: "700-1200 MAD",
     address: { "@type": "PostalAddress", addressCountry: "MA" },
     aggregateRating: {
@@ -368,6 +380,19 @@ export default function Home() {
                     alt={image.alt}
                     fill
                     sizes="(max-width: 768px) 78vw, 28rem"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="gallery-rail-secondary">
+              {galleryImages.slice(5).map((image) => (
+                <div key={image.src} className="gallery-slide group">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 768px) 78vw, 22rem"
                     className="object-cover transition duration-700 group-hover:scale-105"
                   />
                 </div>

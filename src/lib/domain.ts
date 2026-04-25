@@ -330,7 +330,7 @@ export const accommodations: AccommodationContent[] = [
     longDescription:
       "Bungalow cosy au coeur de la ferme, parfait pour deconnecter et vivre une experience authentique.",
     amenities: ["Toilettes seches", "Coin salon", "Wifi", "Vue jardin"],
-    images: ["/images/piscine-collines-oulad-chmicha.jpg"],
+    images: ["/images/architecture-ecologique-oulad-chmicha.jpg"],
   },
   {
     slug: "bungalow-oasis",
@@ -350,7 +350,7 @@ export const accommodations: AccommodationContent[] = [
     longDescription:
       "Ambiance intime avec materiaux naturels, ideal pour les visiteurs qui recherchent le silence et la nature.",
     amenities: ["Toilettes seches", "Lit double", "Ventilation naturelle", "Vue champ"],
-    images: ["/images/piscine-bungalows-oulad-chmicha.jpg"],
+    images: ["/images/eco-ferme-oulad-chmicha.jpg"],
   },
   {
     slug: "chambre-ocre",
