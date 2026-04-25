@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+:root {
+  --background: #071b12;
+  --foreground: #0f4229;
+  --color-surface: #fbf6ea;
+  --color-surface-muted: #e4efdf;
+  --color-ink: #0f4229;
+  --color-ink-soft: #5b685d;
+  --color-border: #d7c9ad;
+  --color-border-strong: #a6bc8d;
+  --color-accent: #3c8d4f;
+  --color-accent-strong: #2b6f3e;
+  --color-success: #1f8c53;
+  --radius-card: 1.75rem;
+  --radius-hero: 2.75rem;
+  --shadow-soft: 0 22px 58px -42px rgb(15 66 41 / 0.52);
+  --shadow-elevated: 0 42px 100px -58px rgb(7 27 18 / 0.72);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--color-accent);
+  --color-secondary: var(--color-ink);
+  --font-sans: var(--font-rubik);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b2a1a;
+    --foreground: #eff9ef;
+    --color-surface: #133625;
+    --color-surface-muted: #1a4330;
+    --color-ink: #eff9ef;
+    --color-ink-soft: #c0d9c6;
+    --color-border: #2d5c43;
+    --color-border-strong: #4f8d66;
+    --color-accent: #5ab85f;
+    --color-accent-strong: #70cc74;
+    --shadow-soft: none;
+    --shadow-elevated: none;
+  }
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #071b12;
+  color: var(--foreground);
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-feature-settings: "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Dans @layer base pour laisser les utilitaires Tailwind (text-*) gagner sur la couleur des liens. */
+@layer base {
+  a {
+    color: inherit;
+  }
+}
+
+/* Barre fixe : ancres ne passent pas sous le header. */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Liens de navigation (header) — sans filet ni contour. */
+.lodge-nav-link {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.92);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.lodge-nav-link:hover {
+  color: #fff;
+}
+
+.lodge-nav-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(189 230 184 / 0.55);
+  border-radius: 2px;
+}
+
+/* Rail mobile : scroll horizontal sans barre visible. */
+.nav-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+}
+
+.surface-grid {
+  background-image:
+    radial-gradient(circle at 10% 0%, rgb(90 184 95 / 0.16), transparent 36%),
+    radial-gradient(circle at 92% 10%, rgb(199 127 79 / 0.13), transparent 38%),
+    linear-gradient(180deg, rgb(7 27 18), rgb(251 246 234) 32%, rgb(7 27 18) 100%);
+}
+
+.section-enter {
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.section-enter:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.mobile-safe-bottom {
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+.glass-panel {
+  background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  border: 0;
+  backdrop-filter: blur(12px);
+}
+
+.premium-cut {
+  border-radius: 46px 14px 54px 14px;
+}
+
+.premium-card {
+  border-radius: 26px 12px 26px 12px;
+  border: 0;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--color-surface) 96%, white) 0%,
+    color-mix(in srgb, var(--color-surface-muted) 88%, white) 100%
+  );
+  box-shadow: 0 22px 48px -36px rgb(15 66 41 / 0.45);
+}
+
+.premium-highlight {
+  background: radial-gradient(circle at 8% 10%, rgb(90 184 95 / 0.24), transparent 42%),
+    linear-gradient(140deg, rgb(7 27 18 / 0.98), rgb(15 66 41 / 0.94));
+  color: #fff;
+}
+
+.eco-card {
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hotel-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hotel-card::after {
+  content: none;
+}
+
+.lodge-card {
+  display: grid;
+  gap: 1.25rem;
+  border: 0;
+  padding-top: 1.25rem;
+}
+
+.lodge-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% 50% 18px 18px / 36% 36% 18px 18px;
+  background: #d8c6a7;
+  aspect-ratio: 4 / 3;
+}
+
+.lodge-meta {
+  display: inline-flex;
+  width: fit-content;
+  border: 0;
+  padding-bottom: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7a4e31;
+}
+
+.gallery-rail {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.gallery-slide {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50% 50% 28px 28px / 36% 36% 28px 28px;
+  background: #d8c6a7;
+  box-shadow: 0 30px 80px -62px rgb(7 27 18 / 0.52);
+}
+
+.gallery-slide-featured {
+  aspect-ratio: 4 / 5.15;
+  box-shadow: 0 40px 110px -68px rgb(7 27 18 / 0.68);
+}
+
+.arched-panel {
+  border-radius: 50% 50% 22px 22px / 36% 36% 22px 22px;
+}
+
+.booking-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% 50% 30px 30px / 20% 20% 30px 30px;
+  background: rgb(255 255 255 / 0.96);
+  color: var(--color-ink);
+  box-shadow: 0 34px 90px -58px rgb(0 0 0 / 0.72);
+}
+
+.booking-panel::before {
+  content: "";
+  display: block;
+  height: clamp(5rem, 12vw, 8rem);
+  border-radius: 0 0 50% 50% / 0 0 22% 22%;
+  background:
+    radial-gradient(circle at 50% -10%, rgb(60 141 79 / 0.38), transparent 42%),
+    linear-gradient(135deg, #f7ead5, #e9f4df);
+}
+
+@media (min-width: 768px) {
+  .gallery-rail {
+    grid-template-columns: 0.76fr 0.92fr 1.3fr 0.92fr 0.76fr;
+    gap: 1.1rem;
+  }
+
+  .gallery-slide {
+    min-height: 18rem;
+  }
+
+  .gallery-slide-featured {
+    min-height: 31rem;
+  }
+}
+
+.editorial-line {
+  position: relative;
+  padding-left: 0;
+}
+
+.editorial-line::before {
+  content: none;
+}
+
+.ornament-float {
+  animation: ornamentFloat 9s ease-in-out infinite alternate;
+}
+
+.ornament-drift {
+  animation: ornamentDrift 11s ease-in-out infinite alternate;
+}
+
+.ornament-pulse {
+  animation: ornamentPulse 7s ease-in-out infinite;
+}
+
+@keyframes ornamentFloat {
+  from { margin-top: 0; }
+  to { margin-top: 22px; }
+}
+
+@keyframes ornamentDrift {
+  from { margin-right: 0; }
+  to { margin-right: 26px; }
+}
+
+@keyframes ornamentPulse {
+  0%, 100% { opacity: 0.12; transform: translateX(-50%) scale(0.98); }
+  50% { opacity: 0.26; transform: translateX(-50%) scale(1.02); }
+}
+
+.soft-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-enter,
+  .section-enter:hover {
+    transition: none;
+    transform: none;
+  }
+
+}

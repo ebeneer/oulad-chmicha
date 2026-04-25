@@ -1,0 +1,7 @@
+Reference UI validee par le client (hero + entete + carte "Carnet de sejour").
+Fichier image : hero-ui-reference-2025-04-25.png
+Contexte de test : localhost:3000/?v=12 (v=12 = indication locale / cache, pas un routage app).
+
+Ce depot Git contient une seule base de code ; il n'y a pas d'arborescence parallele d'anciennes versions a conserver ici.
+
+Ne pas regresser le hero sans revalider par rapport a cette capture.
