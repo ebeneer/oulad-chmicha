@@ -225,10 +225,6 @@ section[id] {
   box-shadow: 0 40px 110px -68px rgb(7 27 18 / 0.68);
 }
 
-.arched-panel {
-  border-radius: 50% 50% 22px 22px / 36% 36% 22px 22px;
-}
-
 .booking-panel {
   position: relative;
   overflow: hidden;

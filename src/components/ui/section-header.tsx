@@ -5,6 +5,8 @@ type SectionHeaderProps = {
   title: string;
   description?: string;
   className?: string;
+  /** Classes Tailwind pour le h2 (ex. couleur) */
+  titleClassName?: string;
   centered?: boolean;
 };
 
@@ -13,6 +15,7 @@ export function SectionHeader({
   title,
   description,
   className,
+  titleClassName,
   centered = false,
 }: SectionHeaderProps) {
   return (
@@ -22,7 +25,12 @@ export function SectionHeader({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="font-[var(--font-display)] text-4xl font-black leading-[0.92] tracking-[-0.055em] text-[var(--color-ink)] sm:text-6xl">
+      <h2
+        className={cn(
+          "font-[var(--font-display)] text-4xl font-black leading-[0.92] tracking-[-0.055em] sm:text-6xl",
+          titleClassName ?? "text-[var(--color-ink)]",
+        )}
+      >
         {title}
       </h2>
       {description ? (

@@ -10,7 +10,7 @@ import NatureOrnaments from "@/components/premium/nature-ornaments";
 import { LodgeHeader } from "@/components/premium/lodge-header";
 import { LeafMark } from "@/components/brand/leaf-mark";
 
-/* Reference UI (hero + carte droite) : design-reference/hero-ui-reference-2025-04-25.png — v12 */
+/* Reference capture : design-reference/hero-ui-reference-2025-04-25.png (hero seul) */
 
 export default function Home() {
   const featuredAccommodations = accommodations.slice(0, 4);
@@ -21,11 +21,6 @@ export default function Home() {
     { label: "Experiences", href: "#experiences" },
     { label: "Avis", href: "#avis" },
     { label: "Contact", href: "#lead-capture" },
-  ];
-  const proofStats = [
-    { label: "Ferme de permaculture", value: "20 ha" },
-    { label: "Avis Google visibles", value: "5.0 / 5" },
-    { label: "Avis publics", value: "23" },
   ];
   const guestSignals = [
     "Hospitalite chaleureuse",
@@ -130,7 +125,7 @@ export default function Home() {
             primaryCtaHref="#lead-capture"
           />
 
-          <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 pb-32 pt-28 sm:px-8 sm:pt-32 lg:grid-cols-[0.95fr_0.82fr] lg:items-end lg:pt-36">
+          <div className="relative z-10 mx-auto max-w-7xl px-5 pb-32 pt-28 sm:px-8 sm:pt-32 lg:pt-36">
             <div className="max-w-4xl text-white">
               <h1 className="font-[var(--font-display)] text-5xl font-black leading-[0.86] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
                 Retraite nature, silence, et confort brut.
@@ -157,52 +152,6 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-
-            <aside className="arched-panel relative w-full overflow-hidden border-0 bg-[#fbf2df] p-6 pt-16 text-[#153a27] shadow-[0_38px_90px_-52px_rgb(0_0_0_/_0.75)]">
-              <Image
-                src="/images/cuisine-houmous-oulad-chmicha.jpg"
-                alt=""
-                width={700}
-                height={420}
-                className="absolute inset-x-0 top-0 h-32 w-full object-cover opacity-20"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#fbf2df]/30 via-[#fbf2df]/90 to-[#fbf2df]" />
-              <div className="relative">
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-[#8a6842]">Carnet de sejour</p>
-                    <h2 className="mt-3 font-[var(--font-display)] text-2xl font-semibold leading-tight sm:text-3xl">
-                      Votre refuge est pret.
-                    </h2>
-                  </div>
-                  <LeafMark className="h-16 w-16 shrink-0 text-[#3c8d4f]" />
-                </div>
-
-                <div className="mt-8 divide-y divide-[#153a27]/15">
-                  {proofStats.map((item) => (
-                    <div key={item.label} className="grid grid-cols-[1fr_auto] items-end gap-4 py-4">
-                      <p className="text-sm leading-5 text-[#536454]">{item.label}</p>
-                      <p className="font-[var(--font-display)] text-3xl font-semibold leading-none text-[#153a27]">
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <p className="mt-5 text-sm leading-6 text-[#536454]">
-                  Reservation directe, echange humain et proposition adaptee a vos dates.
-                </p>
-                <Button asChild className="mt-5 w-full max-w-sm shadow-md sm:mx-auto sm:flex sm:max-w-xs">
-                  <a
-                    href={whatsappUrl("Bonjour, je souhaite reserver un sejour a Oulad Chmicha.")}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    WhatsApp direct
-                  </a>
-                </Button>
-              </div>
-            </aside>
           </div>
         </section>
 
@@ -215,7 +164,7 @@ export default function Home() {
                 description="Le luxe ici vient du calme, des materiaux naturels, de l'espace et de l'accueil humain."
               />
             </div>
-            <div className="divide-y divide-[#0f4229]/15">
+            <div className="divide-y divide-[var(--color-ink)]/15">
               {[
                 ["Permaculture", "20 hectares cultives dans une logique durable."],
                 ["Architecture", "Briques d'argile, construction traditionnelle, confort moderne."],
@@ -225,7 +174,7 @@ export default function Home() {
                   <span className="text-xs uppercase tracking-[0.28em] text-[var(--color-accent)] sm:pt-3">
                     0{index + 1}
                   </span>
-                  <h3 className="font-[var(--font-display)] text-4xl font-black leading-none tracking-[-0.045em] text-[#0f4229]">
+                  <h3 className="font-[var(--font-display)] text-4xl font-black leading-none tracking-[-0.045em] text-[var(--color-ink)]">
                     {title}
                   </h3>
                   <p className="text-sm leading-7 text-[var(--color-ink-soft)] sm:pt-2">{text}</p>
@@ -248,6 +197,7 @@ export default function Home() {
               eyebrow="Hebergements"
               title="Des refuges sobres, intimes, proches de la terre."
               description="Bungalows et chambres pour un sejour calme, authentique et confortable en pleine nature."
+              titleClassName="text-[#0f4229]"
             />
             <div className="grid gap-x-10 gap-y-14 md:grid-cols-2">
               {featuredAccommodations.map((item, index) => (
@@ -324,9 +274,13 @@ export default function Home() {
           <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr]">
             <div className="hotel-card overflow-hidden">
               <div className="p-8">
-                <p className="lodge-meta">Avis Google</p>
-                <p className="mt-5 font-[var(--font-display)] text-7xl font-black leading-none text-[#0f4229]">5.0</p>
-                <p className="mt-3 text-sm leading-7 text-[#526156]">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
+                  Avis Google
+                </p>
+                <p className="mt-5 font-[var(--font-display)] text-7xl font-black leading-none text-[var(--color-ink)]">
+                  5.0
+                </p>
+                <p className="mt-3 text-sm leading-7 text-[var(--color-ink-soft)]">
                   Note actuellement visible, basee sur 23 avis publics.
                 </p>
                 <Button asChild className="mt-7">
@@ -340,20 +294,16 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+            <div className="grid gap-10 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-12">
               {guestSignals.map((signal, index) => (
                 <div
                   key={signal}
-                  className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#fffdf9] via-[#f1f3ea] to-[#dfe8d6] p-6 shadow-[0_16px_44px_-30px_rgba(15,66,41,0.28)] transition-shadow duration-300 ease-out hover:shadow-[0_24px_56px_-24px_rgba(15,66,41,0.36)]"
+                  className="border-l-2 border-[var(--color-accent)] pl-5 sm:pl-6"
                 >
-                  <div
-                    className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-[#3c8d4f]/[0.1] blur-2xl"
-                    aria-hidden
-                  />
-                  <p className="relative text-[0.65rem] font-semibold tabular-nums tracking-[0.32em] text-[#5c6d5a]">
+                  <p className="text-[0.65rem] font-semibold tabular-nums tracking-[0.3em] text-[var(--color-accent)]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="relative mt-3 max-w-[20ch] font-[var(--font-display)] text-[1.15rem] font-medium leading-[1.3] tracking-[-0.04em] text-[#0f4229] sm:text-[1.2rem]">
+                  <h3 className="mt-3 max-w-[22ch] font-[var(--font-display)] text-lg font-medium leading-[1.3] tracking-[-0.04em] text-[var(--color-ink)] sm:text-[1.35rem]">
                     {signal}
                   </h3>
                 </div>
@@ -368,6 +318,7 @@ export default function Home() {
               eyebrow="Galerie"
               title="Une immersion avant meme le premier message."
               description="Images, matieres et calme pour projeter le voyageur dans l'experience."
+              titleClassName="text-[#0f4229]"
             />
             <div className="gallery-rail">
               {galleryImages.slice(0, 5).map((image, index) => (
