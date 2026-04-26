@@ -210,12 +210,13 @@ section[id] {
   grid-template-columns: 1fr;
 }
 
+/* Même arche que .lodge-image (hébergements) — seule l’échelle / ratio changent. */
 .gallery-slide {
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 0;
-  border-radius: 50% 50% 28px 28px / 36% 36% 28px 28px;
+  border-radius: 50% 50% 18px 18px / 36% 36% 18px 18px;
   background: #d8c6a7;
   box-shadow: 0 30px 80px -62px rgb(7 27 18 / 0.52);
 }
@@ -244,13 +245,6 @@ section[id] {
     linear-gradient(135deg, #f7ead5, #e9f4df);
 }
 
-.gallery-rail-secondary {
-  display: grid;
-  gap: 1rem;
-  margin-top: 1.25rem;
-  grid-template-columns: 1fr;
-}
-
 @media (min-width: 768px) {
   .gallery-rail {
     grid-template-columns: 0.76fr 0.92fr 1.3fr 0.92fr 0.76fr;
@@ -265,15 +259,6 @@ section[id] {
     min-height: 31rem;
   }
 
-  .gallery-rail-secondary {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.1rem;
-    margin-top: 1.5rem;
-  }
-
-  .gallery-rail-secondary .gallery-slide {
-    min-height: 16rem;
-  }
 }
 
 .editorial-line {

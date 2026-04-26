@@ -9,6 +9,7 @@ import LandingStickyCta from "@/components/landing-sticky-cta";
 import NatureOrnaments from "@/components/premium/nature-ornaments";
 import { LodgeHeader } from "@/components/premium/lodge-header";
 import { LeafMark } from "@/components/brand/leaf-mark";
+import { GalleryArchCarousel } from "@/components/premium/gallery-arch-carousel";
 
 /* Reference capture : design-reference/hero-ui-reference-2025-04-25.png (hero seul) */
 
@@ -198,6 +199,8 @@ export default function Home() {
               title="Des refuges sobres, intimes, proches de la terre."
               description="Bungalows et chambres pour un sejour calme, authentique et confortable en pleine nature."
               titleClassName="text-[#0f4229]"
+              eyebrowClassName="text-[#2b6f3e]"
+              descriptionClassName="text-[#526156]"
             />
             <div className="grid gap-x-10 gap-y-14 md:grid-cols-2">
               {featuredAccommodations.map((item, index) => (
@@ -319,36 +322,10 @@ export default function Home() {
               title="Une immersion avant meme le premier message."
               description="Images, matieres et calme pour projeter le voyageur dans l'experience."
               titleClassName="text-[#0f4229]"
+              eyebrowClassName="text-[#2b6f3e]"
+              descriptionClassName="text-[#526156]"
             />
-            <div className="gallery-rail">
-              {galleryImages.slice(0, 5).map((image, index) => (
-                <div
-                  key={image.src}
-                  className={`gallery-slide group ${index === 2 ? "gallery-slide-featured" : ""}`}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(max-width: 768px) 78vw, 28rem"
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="gallery-rail-secondary">
-              {galleryImages.slice(5).map((image) => (
-                <div key={image.src} className="gallery-slide group">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(max-width: 768px) 78vw, 22rem"
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
+            <GalleryArchCarousel images={galleryImages} />
           </div>
         </section>
 
@@ -422,28 +399,28 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[var(--color-surface)] px-5 py-16 sm:px-8 lg:py-24">
+        <section className="bg-[#f3eadb] px-5 py-16 sm:px-8 lg:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-[var(--color-accent)]">FAQ</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-[#2b6f3e]">FAQ</p>
               <h2 className="mt-4 font-[var(--font-display)] text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#0f4229] sm:text-7xl">
                 Avant de venir.
               </h2>
-              <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--color-ink-soft)]">
+              <p className="mt-5 max-w-sm text-sm leading-7 text-[#526156]">
                 Les reponses essentielles pour comprendre le lieu, reserver simplement et arriver sereinement.
               </p>
             </div>
             <div className="divide-y divide-[#0f4229]/15">
               {faqItems.map((item, index) => (
                 <div key={item.q} className="grid gap-4 py-7 sm:grid-cols-[4rem_1fr]">
-                  <span className="text-xs uppercase tracking-[0.26em] text-[var(--color-accent)]">
+                  <span className="text-xs uppercase tracking-[0.26em] text-[#2b6f3e]">
                     0{index + 1}
                   </span>
                   <div>
                     <h3 className="font-[var(--font-display)] text-3xl font-black leading-none tracking-[-0.045em] text-[#0f4229]">
                       {item.q}
                     </h3>
-                    <p className="mt-4 text-sm leading-7 text-[var(--color-ink-soft)]">{item.a}</p>
+                    <p className="mt-4 text-sm leading-7 text-[#526156]">{item.a}</p>
                   </div>
                 </div>
               ))}
