@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata = {
   title: "Hebergements",
   description: "Decouvrez nos 4 bungalows et 4 chambres au coeur de la nature.",
+  alternates: { canonical: "/hebergements" },
 };
 
 export default function AccommodationsPage() {

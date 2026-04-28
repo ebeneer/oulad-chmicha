@@ -5,6 +5,9 @@ import {
 } from "@/lib/admin-auth";
 import { parseICal } from "@/lib/ical-parser";
 
+/** Cron iCal — pas de cache edge qui masquerait les synchros fraîches. */
+export const dynamic = "force-dynamic";
+
 async function fetchCalendar(url: string) {
   const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) throw new Error(`Failed to fetch iCal (${response.status})`);
@@ -12,7 +15,7 @@ async function fetchCalendar(url: string) {
 }
 
 export async function GET(request: Request) {
-  const isCron = isAuthorizedCronRequest(request);
+  const isCron = await isAuthorizedCronRequest(request);
   const isAdmin = isCron ? false : await hasAdminSessionFromRequest(request);
   if (!isCron && !isAdmin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

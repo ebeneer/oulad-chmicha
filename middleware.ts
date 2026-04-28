@@ -21,12 +21,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Le cron Vercel est autorise via Authorization: Bearer $CRON_SECRET
-  if (isCronRoute && isAuthorizedCronRequest(request)) {
+  // Cron Vercel — Authorization Bearer (trim ; comparaison constant-time dans isAuthorizedCronRequest).
+  if (isCronRoute && (await isAuthorizedCronRequest(request))) {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+  const token =
+    request.cookies.get(SESSION_COOKIE_NAME)?.value ??
+    request.cookies.get("oc_admin_session")?.value;
   if (await verifyAdminSessionToken(token)) {
     return NextResponse.next();
   }

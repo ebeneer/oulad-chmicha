@@ -1,0 +1,94 @@
+fix(security,bugs,seo): durcir auth admin, débloquer cron Vercel, corriger bugs et SEO
+
+Refactor de sécurité et qualité après audit. Tout passe `tsc --noEmit` et `eslint`.
+
+## Sécurité
+
+- Auth admin : remplace le cookie statique `oc_admin_session=authenticated` par
+  un token HMAC-SHA256 signé (WebCrypto, compatible Edge runtime). Payload avec
+  `exp`, vérification en temps constant. Refuse de démarrer si
+  `ADMIN_SESSION_SECRET` < 16 chars.
+- Cron Vercel `/api/ical-sync` : autorisé via header
+  `Authorization: Bearer $CRON_SECRET` (le middleware le bypass alors). Avant,
+  le cron tombait systématiquement en 401 car le middleware exigeait le cookie
+  admin.
+- Logout : `secure` aligné sur `NODE_ENV` (logout fonctionne désormais en dev
+  HTTP).
+
+## Bugs fonctionnels
+
+- iCal parser (`src/lib/ical-parser.ts`) : implémente le line folding RFC 5545
+  (`\r?\n[ \t]` collé à la ligne précédente), borne sur `END:VEVENT`, parsing
+  du `:` plus robuste. Évite la perte de champs sur les flux Airbnb/Booking.
+- Calendrier admin : vraie grille mensuelle 6×7, navigation mois précédent /
+  suivant, événements (réservations + iCal) positionnés sur les bonnes
+  cellules, mise en évidence du jour courant. Avant : grille 1→30 décorative
+  sans lien avec les dates.
+- Route group `app/admin/(authenticated)/` : `/admin/login` n'hérite plus du
+  AdminLayout (plus de nav admin sur l'écran de login).
+- `next.config.ts` : `__dirname` remplacé par `fileURLToPath(import.meta.url)`
+  pour rester portable en mode ESM.
+- `/api/contact` : nouveau endpoint POST JSON avec validation + relais Resend
+  optionnel (`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`),
+  fallback log applicatif. Les formulaires (landing + page contact) passent
+  d'`action="mailto:"` à un fetch POST avec états loading / success / error
+  (composants `LeadCaptureForm` et `ContactForm`).
+
+## SEO et qualité
+
+- Retire le JSON-LD `aggregateRating` hardcodé (5.0 / 23 reviews) : risque de
+  pénalité Google sur les rich results non vérifiables.
+- `robots.ts` : `disallow` étendu à `/api`.
+- Service worker (`public/sw.js`) : `CACHE_NAME` versionné (`oc-v3`) +
+  nettoyage des anciens caches `oc-*` à l'activate. Évite les chunks Next.js
+  périmés après déploiement.
+- Tous les `rel="noreferrer"` → `rel="noopener noreferrer"` sur les pages
+  publiques.
+- Badges du dashboard admin dérivés des données réelles (unités, réservations
+  actives, en attente, alertes stock) au lieu de valeurs codées en dur.
+- `.gitignore` : exclut `lighthouse-*.json`.
+- `DEPLOYMENT.md` réécrit : liste complète des variables d'env requises, cron
+  quotidien aligné sur `vercel.json` (`0 8 * * *`), étape de validation lead.
+
+## Variables d'environnement à ajouter avant déploiement
+
+- `ADMIN_SESSION_SECRET` (≥ 32 chars, ex. `openssl rand -hex 32`)
+- `CRON_SECRET` (≥ 32 chars)
+- Optionnel pour relais email des leads : `RESEND_API_KEY`,
+  `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`
+
+## Fichiers touchés
+
+Modifiés :
+- middleware.ts
+- next.config.ts
+- src/lib/admin-auth.ts
+- src/lib/ical-parser.ts
+- src/app/api/auth/login/route.ts
+- src/app/api/auth/logout/route.ts
+- src/app/api/ical-sync/route.ts
+- src/app/api/reservations/route.ts
+- src/app/api/ai-generate/route.ts
+- src/app/api/ai/diagnostic/route.ts
+- src/app/api/ai/message/route.ts
+- src/app/page.tsx
+- src/app/contact/page.tsx
+- src/app/hebergements/page.tsx
+- src/app/hebergements/[slug]/page.tsx
+- src/app/robots.ts
+- public/sw.js
+- .gitignore
+- DEPLOYMENT.md
+
+Ajoutés :
+- src/app/api/contact/route.ts
+- src/components/forms/lead-capture-form.tsx
+- src/components/forms/contact-form.tsx
+
+Déplacés (route group `(authenticated)`) :
+- src/app/admin/layout.tsx                       → src/app/admin/(authenticated)/layout.tsx
+- src/app/admin/page.tsx                         → src/app/admin/(authenticated)/page.tsx
+- src/app/admin/{ai-assistant,billing,calendar,clients,meals,operations,reservations,tasks,templates}/
+                                                 → src/app/admin/(authenticated)/{...}/
+
+Vérifications : `npx tsc --noEmit` 0 erreur, `npx eslint .` 0 erreur 0 warning.

@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation";
 
-export const SESSION_COOKIE_NAME = "oc_admin_session";
+/**
+ * Prod : préfixe `__Host-` (Secure, Path=/, pas de Domain) avec HTTPS.
+ * Dev : cookie classique sans Secure pour éviter blocage sur http://localhost.
+ */
+export const SESSION_COOKIE_NAME =
+  process.env.NODE_ENV === "production" ? "__Host-oc_admin_session" : "oc_admin_session";
+
 export const SESSION_TTL_SECONDS = 60 * 60 * 12; // 12h
 
 /**
@@ -68,6 +74,19 @@ function timingSafeEqual(a: Uint8Array, b: Uint8Array): boolean {
   return diff === 0;
 }
 
+/** Comparaison à temps constant (SHA-512) utilisable hors secrets longs égaux — Edge-safe. */
+export async function timingSafeUtf8Equal(a: string, b: string): Promise<boolean> {
+  try {
+    const [ha, hb] = await Promise.all([
+      crypto.subtle.digest("SHA-512", encoder.encode(a)),
+      crypto.subtle.digest("SHA-512", encoder.encode(b)),
+    ]);
+    return timingSafeEqual(new Uint8Array(ha), new Uint8Array(hb));
+  } catch {
+    return false;
+  }
+}
+
 export async function verifyAdminSessionToken(token: string | undefined | null): Promise<boolean> {
   if (!token) return false;
   const parts = token.split(".");
@@ -119,27 +138,44 @@ function readCookieFromHeader(cookieHeader: string, name: string): string | null
   return null;
 }
 
+/** Lit le jeton en production : cookie actuel ou ancien nom (migration sans coupure). */
+function sessionTokenFromCookieHeader(cookieHeader: string): string | null {
+  const primary = readCookieFromHeader(cookieHeader, SESSION_COOKIE_NAME);
+  if (primary) return primary;
+  if (process.env.NODE_ENV === "production") {
+    return readCookieFromHeader(cookieHeader, "oc_admin_session");
+  }
+  return null;
+}
+
 export async function hasAdminSessionFromRequest(request: Request): Promise<boolean> {
   const cookieHeader = request.headers.get("cookie") ?? "";
-  const token = readCookieFromHeader(cookieHeader, SESSION_COOKIE_NAME);
+  const token = sessionTokenFromCookieHeader(cookieHeader);
   return verifyAdminSessionToken(token);
 }
 
 /**
  * Verifie qu'un appel cron Vercel est legitime.
- * Vercel Cron ajoute Authorization: Bearer <CRON_SECRET>.
+ * Vercel envoie `Authorization: Bearer <CRON_SECRET>` (trim recommande sur le secret en env).
  */
-export function isAuthorizedCronRequest(request: Request): boolean {
-  const expected = process.env.CRON_SECRET;
+export async function isAuthorizedCronRequest(request: Request): Promise<boolean> {
+  const expected = process.env.CRON_SECRET?.trim();
   if (!expected) return false;
-  const header = request.headers.get("authorization") ?? "";
-  return header === `Bearer ${expected}`;
+  const raw = request.headers.get("authorization");
+  const m = raw?.trim().match(/^Bearer\s+([\s\S]+)$/i);
+  const token = m?.[1]?.trim();
+  if (!token) return false;
+  return timingSafeUtf8Equal(token, expected);
 }
 
 export async function assertAdminSessionOrRedirect(nextPath?: string): Promise<void> {
   const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
-  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const token =
+    cookieStore.get(SESSION_COOKIE_NAME)?.value ??
+    (process.env.NODE_ENV === "production"
+      ? cookieStore.get("oc_admin_session")?.value
+      : undefined);
   if (await verifyAdminSessionToken(token)) return;
 
   const query = nextPath ? `?next=${encodeURIComponent(nextPath)}` : "";

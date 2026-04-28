@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { accommodations, activities, units } from "@/lib/domain";
 import { absoluteUrl, siteConfig, whatsappUrl } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,14 @@ import { LeafMark } from "@/components/brand/leaf-mark";
 import { GalleryArchCarousel } from "@/components/premium/gallery-arch-carousel";
 
 /* Reference capture : design-reference/hero-ui-reference-2025-04-25.png (hero seul) */
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: siteConfig.url,
+    type: "website",
+  },
+};
 
 export default function Home() {
   const featuredAccommodations = accommodations.slice(0, 4);

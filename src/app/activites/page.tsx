@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 export const metadata = {
   title: "Activites",
   description: "Decouvrez les experiences disponibles pendant votre sejour.",
+  alternates: { canonical: "/activites" },
 };
 
 export default function ActivitiesPage() {

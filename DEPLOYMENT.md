@@ -13,11 +13,13 @@ Côté Vercel (Project Settings → Environment Variables) :
 - `ADMIN_EMAIL` — email admin pour le back-office.
 - `ADMIN_PASSWORD` — mot de passe admin (rotation régulière conseillée).
 - `ADMIN_SESSION_SECRET` — secret aléatoire ≥ 32 caractères pour signer le cookie de session admin (HMAC-SHA256). Générer avec `openssl rand -hex 32`.
-- `CRON_SECRET` — token aléatoire (≥ 32 chars) que Vercel Cron envoie en `Authorization: Bearer …` pour appeler `/api/ical-sync`.
+- `CRON_SECRET` — token aléatoire (≥ 32 chars) que Vercel Cron envoie en `Authorization: Bearer …` pour appeler `/api/ical-sync`. **Sans retour ligne ni espaces** en trop (valeur trim côté app). Obligatoire en production pour que le cron passe le middleware.
 - `AIRBNB_ICAL_URL` / `BOOKING_ICAL_URL` — flux iCal des plateformes.
 - `OPENAI_API_KEY` — pour l'assistant IA.
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — branchement Supabase (optionnel, fallback données locales).
 - `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (optionnels) — relais des leads `/api/contact` par email.
+
+**Notes sécurité:** cookie admin prod = `__Host-oc_admin_session` (HTTPS, `Secure`, `HttpOnly`) ; ancien nom `oc_admin_session` encore accepté le temps de se reconnecter. Login : vérif mot de passe en temps comparable + délai minimum de réponse. En-têtes (`Permissions-Policy`, `X-Frame-Options`, etc.) dans `next.config.ts`.
 
 ## 3) Supabase
 
