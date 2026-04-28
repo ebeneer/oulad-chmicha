@@ -89,7 +89,7 @@ export default async function AccommodationDetailPage({ params }: PageProps) {
               <a
                 href={whatsappUrl(`Bonjour, je souhaite reserver ${accommodation.title}.`)}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 WhatsApp reservation
               </a>
@@ -178,7 +178,7 @@ export default async function AccommodationDetailPage({ params }: PageProps) {
           className="mt-4 inline-block text-sm font-semibold text-[var(--color-accent)] underline"
           href={whatsappUrl(`Bonjour, je souhaite reserver ${accommodation.title}.`)}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           Ou envoyer via WhatsApp
         </a>

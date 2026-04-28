@@ -43,7 +43,7 @@ export default function ContactPage() {
             <a
               href={whatsappUrl("Bonjour, je souhaite reserver un sejour a Oulad Chmicha.")}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               WhatsApp prioritaire
             </a>
@@ -74,7 +74,7 @@ export default function ContactPage() {
               className="inline-flex h-11 items-center justify-center rounded-full border border-[var(--color-border-strong)] px-5 text-sm font-semibold"
               href="https://maps.app.goo.gl/EGqRb2SeYNYEDXx7A"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Ouvrir Google Maps
             </a>
@@ -82,7 +82,7 @@ export default function ContactPage() {
               <a
                 href={whatsappUrl("Bonjour, pouvez-vous me partager les indications pour arriver a Oulad Chmicha ?")}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Recevoir les indications WhatsApp
               </a>
@@ -102,7 +102,7 @@ export default function ContactPage() {
             className="font-semibold text-[var(--color-accent)] underline"
             href="https://maps.app.goo.gl/EGqRb2SeYNYEDXx7A"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             ouvrir la carte
           </a>

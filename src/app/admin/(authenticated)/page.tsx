@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Badge } from "@/components/ui/badge";
+import { reservations, units, stockItems } from "@/lib/domain";
 
 const modules = [
   {
@@ -42,6 +43,13 @@ const modules = [
 ];
 
 export default function AdminHomePage() {
+  const unitCount = units.length;
+  const upcomingCount = reservations.filter(
+    (r) => r.status === "confirmed" || r.status === "checked_in",
+  ).length;
+  const pendingCount = reservations.filter((r) => r.status === "pending").length;
+  const lowStockCount = stockItems.filter((i) => i.currentQty < i.minQty).length;
+
   return (
     <main className="space-y-6">
       <Card className="section-enter p-6 sm:p-7">
@@ -51,9 +59,16 @@ export default function AdminHomePage() {
           description="Interface mobile-first pour accelerer les decisions, reduire les oublis et fluidifier les operations."
         />
         <div className="mt-5 flex flex-wrap gap-2">
-          <Badge tone="info">8 unites</Badge>
-          <Badge tone="success">Operations centralisees</Badge>
-          <Badge tone="warning">Assistants IA actifs</Badge>
+          <Badge tone="info">{unitCount} unites</Badge>
+          <Badge tone="success">{upcomingCount} reservations actives</Badge>
+          {pendingCount > 0 ? (
+            <Badge tone="warning">{pendingCount} en attente</Badge>
+          ) : null}
+          {lowStockCount > 0 ? (
+            <Badge tone="warning">{lowStockCount} alertes stock</Badge>
+          ) : (
+            <Badge tone="success">Stock OK</Badge>
+          )}
         </div>
       </Card>
 

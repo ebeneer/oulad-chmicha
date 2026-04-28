@@ -90,11 +90,8 @@ export default function Home() {
     ],
     priceRange: "700-1200 MAD",
     address: { "@type": "PostalAddress", addressCountry: "MA" },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "23",
-    },
+    // aggregateRating volontairement absent: doit etre derive d'avis verifiables (Google, Booking)
+    // pour ne pas declencher de penalite "Rich results manuel review" Google.
   };
 
   return (
@@ -127,7 +124,7 @@ export default function Home() {
             primaryCtaHref="#lead-capture"
           />
 
-          <div className="relative z-10 mx-auto max-w-7xl px-5 pb-32 pt-32 sm:px-8 sm:pt-36 lg:pt-40">
+          <div className="relative z-10 mx-auto max-w-7xl px-5 pb-32 pt-48 sm:px-8 sm:pt-56 lg:pt-64">
             <div className="max-w-4xl text-white">
               <h1 className="font-[var(--font-display)] text-5xl font-black leading-[0.86] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
                 Retraite nature,
@@ -293,7 +290,7 @@ export default function Home() {
                   <a
                     href="https://www.google.com/travel/search?g2lb=4965990,72471280,72560029,72573224,72647020,72686036,72803964,72882230,72958624,73059275,73064764,121608706&hl=fr-MA&gl=ma&ssta=1&q=Ferme+%C3%89cologique+Oulad+Chmicha&ts=CAEaKgooEiYyJDB4ZGE2ZWYwODYwYWVlMTdmOjB4Y2Y3MDcyNmM3ZjdjZDNkNQ&qs=CAEyFENnc0kxYWZ6LThmTm5MalBBUkFCOAI&ap=ugEHcmV2aWV3cw&ictx=111&ved=1t:1250"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                   >
                     Voir Google Travel
                   </a>
@@ -444,7 +441,7 @@ export default function Home() {
                   <a
                     href={whatsappUrl("Bonjour, je souhaite reserver un sejour a Oulad Chmicha.")}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                   >
                     WhatsApp direct
                   </a>
@@ -472,7 +469,7 @@ export default function Home() {
           </div>
           <div className="relative mx-auto mt-12 flex max-w-7xl flex-wrap items-center justify-between gap-3 pt-6 text-xs text-white/50">
             <p>© Oulad Chmicha</p>
-            <a href={siteConfig.url} target="_blank" rel="noreferrer" className="hover:text-white">
+            <a href={siteConfig.url} target="_blank" rel="noopener noreferrer" className="hover:text-white">
               Site officiel
             </a>
           </div>
