@@ -1,7 +1,7 @@
 import { siteConfig, whatsappUrl } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { FieldLabel, Input, Textarea } from "@/components/ui/field";
+import { ContactForm } from "@/components/forms/contact-form";
 import { SectionHeader } from "@/components/ui/section-header";
 
 export const metadata = {
@@ -60,34 +60,7 @@ export default function ContactPage() {
       <section className="mt-6 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <Card className="section-enter p-6 sm:p-7">
           <h2 className="font-[var(--font-display)] text-3xl">Formulaire rapide</h2>
-          <form
-            className="mt-5 grid gap-4 sm:grid-cols-2"
-            action={`mailto:${siteConfig.contactEmail}`}
-            method="post"
-            encType="text/plain"
-          >
-            <div className="space-y-2">
-              <FieldLabel htmlFor="contact-name">Nom complet</FieldLabel>
-              <Input id="contact-name" name="name" placeholder="Nom" required />
-            </div>
-            <div className="space-y-2">
-              <FieldLabel htmlFor="contact-email">Email</FieldLabel>
-              <Input id="contact-email" name="email" placeholder="Email" type="email" required />
-            </div>
-            <div className="space-y-2 sm:col-span-2">
-              <FieldLabel htmlFor="contact-message">Votre demande</FieldLabel>
-              <Textarea
-                id="contact-message"
-                name="message"
-                rows={5}
-                placeholder="Dates souhaitees, nombre de personnes, type de logement, contraintes..."
-                required
-              />
-            </div>
-            <Button className="sm:col-span-2" type="submit">
-              Envoyer ma demande
-            </Button>
-          </form>
+          <ContactForm />
         </Card>
 
         <Card className="section-enter p-6 sm:p-7">

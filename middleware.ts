@@ -1,22 +1,33 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import {
+  SESSION_COOKIE_NAME,
+  isAuthorizedCronRequest,
+  verifyAdminSessionToken,
+} from "@/lib/admin-auth";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminRoute = pathname.startsWith("/admin");
   const isAdminLoginRoute = pathname.startsWith("/admin/login");
+  const isCronRoute = pathname === "/api/ical-sync";
   const isProtectedApiRoute =
     pathname.startsWith("/api/ai/") ||
     pathname === "/api/ai-generate" ||
-    pathname === "/api/ical-sync" ||
+    isCronRoute ||
     pathname === "/api/reservations";
 
   if ((!isAdminRoute && !isProtectedApiRoute) || isAdminLoginRoute) {
     return NextResponse.next();
   }
 
-  const hasSession = request.cookies.get("oc_admin_session")?.value === "authenticated";
-  if (hasSession) {
+  // Le cron Vercel est autorise via Authorization: Bearer $CRON_SECRET
+  if (isCronRoute && isAuthorizedCronRequest(request)) {
+    return NextResponse.next();
+  }
+
+  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+  if (await verifyAdminSessionToken(token)) {
     return NextResponse.next();
   }
 

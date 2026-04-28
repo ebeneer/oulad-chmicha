@@ -210,10 +210,10 @@ section[id] {
   grid-template-columns: 1fr;
 }
 
-/* Même arche que .lodge-image (hébergements) — seule l’échelle / ratio changent. */
+/* Même arche partout (mobile + rail) : un seul ratio — la grille ne fait varier que la taille. */
 .gallery-slide {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 5.15;
   overflow: hidden;
   border: 0;
   border-radius: 50% 50% 18px 18px / 36% 36% 18px 18px;
@@ -222,41 +222,22 @@ section[id] {
 }
 
 .gallery-slide-featured {
-  aspect-ratio: 4 / 5.15;
   box-shadow: 0 40px 110px -68px rgb(7 27 18 / 0.68);
 }
 
 .booking-panel {
   position: relative;
   overflow: hidden;
-  border-radius: 50% 50% 30px 30px / 20% 20% 30px 30px;
+  border-radius: 1rem;
   background: rgb(255 255 255 / 0.96);
   color: var(--color-ink);
   box-shadow: 0 34px 90px -58px rgb(0 0 0 / 0.72);
-}
-
-.booking-panel::before {
-  content: "";
-  display: block;
-  height: clamp(5rem, 12vw, 8rem);
-  border-radius: 0 0 50% 50% / 0 0 22% 22%;
-  background:
-    radial-gradient(circle at 50% -10%, rgb(60 141 79 / 0.38), transparent 42%),
-    linear-gradient(135deg, #f7ead5, #e9f4df);
 }
 
 @media (min-width: 768px) {
   .gallery-rail {
     grid-template-columns: 0.76fr 0.92fr 1.3fr 0.92fr 0.76fr;
     gap: 1.1rem;
-  }
-
-  .gallery-slide {
-    min-height: 18rem;
-  }
-
-  .gallery-slide-featured {
-    min-height: 31rem;
   }
 
 }
@@ -278,10 +259,6 @@ section[id] {
   animation: ornamentDrift 11s ease-in-out infinite alternate;
 }
 
-.ornament-pulse {
-  animation: ornamentPulse 7s ease-in-out infinite;
-}
-
 @keyframes ornamentFloat {
   from { margin-top: 0; }
   to { margin-top: 22px; }
@@ -290,11 +267,6 @@ section[id] {
 @keyframes ornamentDrift {
   from { margin-right: 0; }
   to { margin-right: 26px; }
-}
-
-@keyframes ornamentPulse {
-  0%, 100% { opacity: 0.12; transform: translateX(-50%) scale(0.98); }
-  50% { opacity: 0.26; transform: translateX(-50%) scale(1.02); }
 }
 
 .soft-orb {

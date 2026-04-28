@@ -14,7 +14,7 @@ type SupabaseReservation = {
 };
 
 export async function GET(request: Request) {
-  if (!hasAdminSessionFromRequest(request)) {
+  if (!(await hasAdminSessionFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

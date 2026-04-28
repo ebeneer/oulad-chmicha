@@ -18,9 +18,8 @@ function wrapIndex(i: number, n: number) {
 }
 
 /**
- * Cinq arches en bande (desktop) : la carte centrale est la plus grande.
- * Mobile : seule l’image centrale (pleine largeur) avec la même forme d’arche.
- * La pagination place l’image choisie au centre.
+ * Cinq arches en bande (desktop) : même forme d’arche partout ; la grille ne fait que varier la taille.
+ * Mobile : même arche, une seule image centrale avec pagination.
  */
 export function GalleryArchCarousel({ images, className }: GalleryArchCarouselProps) {
   const n = images.length;
@@ -79,7 +78,7 @@ export function GalleryArchCarousel({ images, className }: GalleryArchCarouselPr
       </div>
 
       <div className="md:hidden">
-        <div className="gallery-slide gallery-slide-featured group relative mx-auto aspect-[4/5.15] w-full min-h-[min(28rem,78vh)] max-w-md">
+        <div className="gallery-slide gallery-slide-featured group relative mx-auto w-full max-w-md">
           <Image
             key={images[center]!.src}
             src={images[center]!.src}

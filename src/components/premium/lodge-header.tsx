@@ -1,5 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LeafMark } from "@/components/brand/leaf-mark";
+import { cn } from "@/lib/cn";
+
+const SCROLL_SOLID_AFTER = 48;
 
 type NavItem = { label: string; href: string };
 
@@ -30,49 +36,58 @@ function NavList({
 }
 
 /**
- * Barre fixe : fond vitré, ombre discrète. Desktop = 3 colonnes (logo, nav centree, CTA).
- * Mobile = logo + CTA, puis liens en scroll horizontal (aucun hamburger).
+ * Au-dessus du hero : aucune bande, menu comme calque sur l’image.
+ * Après léger défilement : barre fixed vitrée (sticky visuel).
  */
 export function LodgeHeader({
   navItems,
   primaryCtaLabel,
   primaryCtaHref,
 }: LodgeHeaderProps) {
+  const [barSolid, setBarSolid] = useState(false);
+
+  useEffect(() => {
+    const update = () => setBarSolid(window.scrollY > SCROLL_SOLID_AFTER);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-50 border-0 bg-[#071b12]/80 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow] duration-300 ease-out",
+        barSolid
+          ? "bg-[#071b12]/82 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+          : "bg-transparent shadow-none backdrop-blur-none",
+      )}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-2.5 py-3 sm:gap-3 sm:py-3.5 lg:hidden">
-          <div className="flex items-center justify-between gap-3">
-            <a
-              href="#"
-              className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
-            >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-b from-white/20 to-white/[0.07] shadow-inner shadow-black/20 sm:h-10 sm:w-10">
-                <LeafMark className="h-5 w-5 text-[#bde6b8] transition duration-200 group-hover:scale-105 sm:h-6 sm:w-6" />
-              </span>
-              <span className="truncate font-[var(--font-display)] text-lg font-semibold tracking-[-0.02em] text-white sm:text-xl">
-                Oulad Chmicha
-              </span>
-            </a>
-            <Button asChild size="sm" variant="onDark">
-              <a href={primaryCtaHref}>{primaryCtaLabel}</a>
-            </Button>
-          </div>
+        <div className="flex min-w-0 items-center gap-3 py-3 sm:gap-4 sm:py-3.5 lg:hidden">
+          <a
+            href="#"
+            className="group flex min-w-0 shrink-0 items-center gap-2 sm:gap-3"
+          >
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-b from-white/20 to-white/[0.07] shadow-inner shadow-black/20 sm:h-10 sm:w-10">
+              <LeafMark className="h-5 w-5 text-[#bde6b8] transition duration-200 group-hover:scale-105 sm:h-6 sm:w-6" />
+            </span>
+            <span className="max-w-[9rem] truncate font-[var(--font-display)] text-base font-semibold tracking-[-0.02em] text-white sm:max-w-none sm:text-lg md:text-xl">
+              Oulad Chmicha
+            </span>
+          </a>
           <nav
-            className="nav-scroll -mx-1 flex min-w-0 overflow-x-auto px-1"
+            className="nav-scroll ml-5 min-w-0 flex-1 overflow-x-auto sm:ml-8"
             aria-label="Navigation"
           >
-            <NavList items={navItems} className="flex w-max min-w-0 items-center gap-0.5" />
+            <NavList items={navItems} className="flex min-h-[2.75rem] w-max min-w-0 items-center gap-0.5 sm:gap-1" />
           </nav>
         </div>
 
-        <div className="hidden h-16 items-center py-0 lg:grid lg:grid-cols-[1fr_minmax(0,auto)_1fr] lg:gap-6">
-          <div className="flex min-w-0 justify-start">
+        <div className="hidden h-16 items-center justify-between gap-4 py-0 lg:flex">
+          <div className="flex min-w-0 flex-1 items-center gap-6 xl:gap-10">
             <a
               href="#"
-              className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
+              className="group flex shrink-0 items-center gap-2.5 sm:gap-3"
             >
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-b from-white/20 to-white/[0.07] shadow-inner shadow-black/20">
                 <LeafMark className="h-6 w-6 text-[#bde6b8] transition duration-200 group-hover:scale-105" />
@@ -81,14 +96,17 @@ export function LodgeHeader({
                 Oulad Chmicha
               </span>
             </a>
+            <nav
+              className="nav-scroll ml-2 min-w-0 flex-1 overflow-x-auto lg:ml-5"
+              aria-label="Navigation"
+            >
+              <NavList
+                items={navItems}
+                className="flex w-max min-w-0 flex-nowrap items-center gap-0.5 lg:gap-1"
+              />
+            </nav>
           </div>
-          <nav className="flex min-w-0 justify-center" aria-label="Navigation">
-            <NavList
-              items={navItems}
-              className="flex flex-wrap items-center justify-center gap-0.5 lg:gap-1"
-            />
-          </nav>
-          <div className="flex justify-end">
+          <div className="shrink-0">
             <Button asChild size="sm" variant="onDark">
               <a href={primaryCtaHref}>{primaryCtaLabel}</a>
             </Button>

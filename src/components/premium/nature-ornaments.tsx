@@ -39,26 +39,6 @@ export default function NatureOrnaments() {
           fill="rgb(15 66 41 / 0.85)"
         />
       </svg>
-
-      <svg
-        className="ornament-pulse absolute bottom-6 left-1/2 h-[220px] w-[520px] -translate-x-1/2 opacity-20"
-        viewBox="0 0 520 220"
-      >
-        <path
-          d="M8,180 C80,120 120,210 190,160 C250,118 290,210 360,165 C420,127 470,190 512,150"
-          stroke="rgb(90 184 95)"
-          strokeWidth="3"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <path
-          d="M8,120 C80,60 120,150 190,108 C250,66 290,160 360,112 C420,74 470,140 512,100"
-          stroke="rgb(255 255 255)"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
     </div>
   );
 }

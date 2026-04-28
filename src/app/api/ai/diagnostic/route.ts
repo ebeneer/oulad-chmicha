@@ -3,7 +3,7 @@ import { hasAdminSessionFromRequest } from "@/lib/admin-auth";
 import { generateTextWithOpenAI } from "@/lib/openai";
 
 export async function POST(request: Request) {
-  if (!hasAdminSessionFromRequest(request)) {
+  if (!(await hasAdminSessionFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

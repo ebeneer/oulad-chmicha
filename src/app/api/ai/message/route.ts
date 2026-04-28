@@ -7,7 +7,7 @@ type MessageBody = {
 };
 
 export async function POST(request: Request) {
-  if (!hasAdminSessionFromRequest(request)) {
+  if (!(await hasAdminSessionFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

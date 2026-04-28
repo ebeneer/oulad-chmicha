@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { hasAdminSessionFromRequest } from "@/lib/admin-auth";
+import {
+  hasAdminSessionFromRequest,
+  isAuthorizedCronRequest,
+} from "@/lib/admin-auth";
 import { parseICal } from "@/lib/ical-parser";
 
 async function fetchCalendar(url: string) {
@@ -9,7 +12,9 @@ async function fetchCalendar(url: string) {
 }
 
 export async function GET(request: Request) {
-  if (!hasAdminSessionFromRequest(request)) {
+  const isCron = isAuthorizedCronRequest(request);
+  const isAdmin = isCron ? false : await hasAdminSessionFromRequest(request);
+  if (!isCron && !isAdmin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
