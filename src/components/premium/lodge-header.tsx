@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LeafMark } from "@/components/brand/leaf-mark";
 import { cn } from "@/lib/cn";
 
 const SCROLL_SOLID_AFTER = 48;
@@ -36,8 +36,8 @@ function NavList({
 }
 
 /**
- * Au-dessus du hero : aucune bande, menu comme calque sur l’image.
- * Après léger défilement : barre fixed vitrée (sticky visuel).
+ * Au-dessus du hero : aucune bande, menu comme calque sur l'image.
+ * Apres leger defilement : barre fixed vitree (sticky visuel).
  */
 export function LodgeHeader({
   navItems,
@@ -66,14 +66,18 @@ export function LodgeHeader({
         <div className="flex min-w-0 items-center gap-3 py-3 sm:gap-4 sm:py-3.5 lg:hidden">
           <a
             href="#"
-            className="group flex min-w-0 shrink-0 items-center gap-2 sm:gap-3"
+            className="group flex min-w-0 shrink-0 items-center"
+            aria-label="Oulad Chmicha - accueil"
           >
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-b from-white/20 to-white/[0.07] shadow-inner shadow-black/20 sm:h-10 sm:w-10">
-              <LeafMark className="h-5 w-5 text-[#bde6b8] transition duration-200 group-hover:scale-105 sm:h-6 sm:w-6" />
-            </span>
-            <span className="max-w-[9rem] truncate font-[var(--font-display)] text-base font-semibold tracking-[-0.02em] text-white sm:max-w-none sm:text-lg md:text-xl">
-              Oulad Chmicha
-            </span>
+            <Image
+              src="/images/logo-oulad-chmicha-white-trim.webp"
+              alt="Oulad Chmicha - ferme permacole"
+              width={459}
+              height={287}
+              priority
+              sizes="(max-width: 1024px) 144px, 192px"
+              className="h-10 w-auto sm:h-11"
+            />
           </a>
           <nav
             className="nav-scroll ml-5 min-w-0 flex-1 overflow-x-auto sm:ml-8"
@@ -87,14 +91,18 @@ export function LodgeHeader({
           <div className="flex min-w-0 flex-1 items-center gap-6 xl:gap-10">
             <a
               href="#"
-              className="group flex shrink-0 items-center gap-2.5 sm:gap-3"
+              className="group flex shrink-0 items-center"
+              aria-label="Oulad Chmicha - accueil"
             >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-b from-white/20 to-white/[0.07] shadow-inner shadow-black/20">
-                <LeafMark className="h-6 w-6 text-[#bde6b8] transition duration-200 group-hover:scale-105" />
-              </span>
-              <span className="font-[var(--font-display)] text-xl font-semibold tracking-[-0.02em] text-white">
-                Oulad Chmicha
-              </span>
+              <Image
+                src="/images/logo-oulad-chmicha-white-trim.webp"
+                alt="Oulad Chmicha - ferme permacole"
+                width={459}
+                height={287}
+                priority
+                sizes="192px"
+                className="h-12 w-auto"
+              />
             </a>
             <nav
               className="nav-scroll ml-2 min-w-0 flex-1 overflow-x-auto lg:ml-5"

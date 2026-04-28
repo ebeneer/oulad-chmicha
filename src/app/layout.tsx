@@ -29,6 +29,14 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   alternates: { canonical: siteConfig.url },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -42,6 +50,12 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Oulad Chmicha - piscine et bungalows",
+      },
+      {
+        url: absoluteUrl("/images/og-oulad-chmicha.jpg"),
+        width: 1200,
+        height: 630,
+        alt: "Oulad Chmicha - ferme permacole",
       },
     ],
   },

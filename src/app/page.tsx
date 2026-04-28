@@ -9,7 +9,6 @@ import { LeadCaptureForm } from "@/components/forms/lead-capture-form";
 import LandingStickyCta from "@/components/landing-sticky-cta";
 import NatureOrnaments from "@/components/premium/nature-ornaments";
 import { LodgeHeader } from "@/components/premium/lodge-header";
-import { LeafMark } from "@/components/brand/leaf-mark";
 import { GalleryArchCarousel } from "@/components/premium/gallery-arch-carousel";
 
 /* Reference capture : design-reference/hero-ui-reference-2025-04-25.png (hero seul) */
@@ -435,12 +434,14 @@ export default function Home() {
           <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <div>
               <div className="flex items-center gap-3">
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-white/10">
-                  <LeafMark className="h-8 w-8 text-[#bde6b8]" />
-                </span>
-                <span className="font-[var(--font-display)] text-3xl font-black tracking-[-0.04em]">
-                  Oulad Chmicha
-                </span>
+                <Image
+                  src="/images/logo-oulad-chmicha-white-trim.webp"
+                  alt="Oulad Chmicha - ferme permacole"
+                  width={459}
+                  height={287}
+                  sizes="(max-width: 640px) 200px, 260px"
+                  className="h-16 w-auto sm:h-20"
+                />
               </div>
               <h2 className="mt-8 max-w-3xl font-[var(--font-display)] text-5xl font-black leading-[0.9] tracking-[-0.06em] sm:text-7xl">
                 Une parenthese nature, reservee en direct.
